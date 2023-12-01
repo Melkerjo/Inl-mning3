@@ -15,7 +15,8 @@ namespace UserManagerTests
         [SetUp]
         public void SetUp()
         {
-            user = new User(1, "JohnDoe", "password", "john@example.com");
+            // Arrange
+            user = new User(1, "Melker", "password", "melker@example.com");
             mockDatabase = new Mock<IDatabase>();
             userManager = new UserManager(mockDatabase.Object);
 
@@ -82,16 +83,15 @@ namespace UserManagerTests
             // Act and Assert
             var ex = Assert.Throws<ArgumentException>(() => userManager.RemoveUser(nonExistentUserId));
             Assert.AreEqual($"User with ID {nonExistentUserId} not found", ex.Message);
-
-
         }
 
         [TearDown]
         public void TearDown()
         {
+            // Clean up after each test
             user = null;
-            mockDatabase = null;
             userManager = null;
+            mockDatabase.Reset();
         }
     }
 }
